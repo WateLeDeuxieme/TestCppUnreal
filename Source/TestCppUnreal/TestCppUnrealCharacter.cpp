@@ -10,6 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "InteractObject.h"
 
 #include "PhysicsEngine/PhysicsHandleComponent.h"
 #include "AssetTypeActions/AssetDefinition_SoundBase.h"
@@ -115,7 +116,7 @@ void ATestCppUnrealCharacter::SetupPlayerInputComponent(UInputComponent* PlayerI
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ATestCppUnrealCharacter::Look);
 
-		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &ATestCppUnrealCharacter::Grab );
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &ATestCppUnrealCharacter::Interact );
 		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Completed, this, &ATestCppUnrealCharacter::Release );
 	}
 	else
@@ -160,7 +161,7 @@ void ATestCppUnrealCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
-void ATestCppUnrealCharacter::Grab(const FInputActionValue& Value)
+void ATestCppUnrealCharacter::Interact(const FInputActionValue& Value)
 {
 	FCollisionQueryParams QueryParams;
 	QueryParams.AddIgnoredActor(this);
@@ -174,15 +175,18 @@ void ATestCppUnrealCharacter::Grab(const FInputActionValue& Value)
 	if (Hit.bBlockingHit)
 	{
 		
-		OnGrabbedObjectDelegate.Broadcast(true);
+		
 		PhysicsHandlerComp->GrabComponentAtLocation(Hit.GetActor()->FindComponentByClass<UStaticMeshComponent>(),"None",Hit.Location);
 		
+	}
+	if(Hit.GetActor())
+	{
 	}
 }
 
 void ATestCppUnrealCharacter::Release(const FInputActionValue& Value)
 {
 	
-	OnGrabbedObjectDelegate.Broadcast(false);
+	OnSpeedObjectDelegate.Broadcast(false);
 	PhysicsHandlerComp->ReleaseComponent();
 }

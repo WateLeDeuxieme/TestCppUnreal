@@ -15,7 +15,7 @@ class UPhysicsHandleComponent;
 struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGrabbedObject, bool, isGrabbed);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSpeedObject, bool, isSpeed);
 
 UCLASS(config=Game)
 class ATestCppUnrealCharacter : public ACharacter
@@ -59,7 +59,7 @@ public:
 	ATestCppUnrealCharacter();
 	
 	UPROPERTY(BlueprintAssignable,Blueprintable)
-	FOnGrabbedObject OnGrabbedObjectDelegate;
+	FOnSpeedObject OnSpeedObjectDelegate;
 
 protected:
 
@@ -69,7 +69,7 @@ protected:
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 	
-	void Grab(const FInputActionValue& Value);
+	void Interact(const FInputActionValue& Value);
 	void Release(const FInputActionValue& Value);
 			
 

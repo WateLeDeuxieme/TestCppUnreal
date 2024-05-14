@@ -24,7 +24,7 @@ void AInteractObject::BeginPlay()
 	if(ATestCppUnrealCharacter* PlayerRef = Cast<ATestCppUnrealCharacter>(UGameplayStatics::GetPlayerCharacter(this,0)))
 	{
 		UE_LOG(LogTemp,Warning,TEXT("TESTREFPLAYER"));
-		PlayerRef->OnGrabbedObjectDelegate.AddDynamic(this,&AInteractObject::TestCallDelegate);
+		
 	}
 }
 
@@ -47,7 +47,7 @@ void AInteractObject::TestInterfaceCall_Implementation()
 	UE_LOG(LogTemp,Warning,TEXT("TESTINTERFACECALL"));
 }
 
-void AInteractObject::TestCallDelegate(bool isGrabbed)
+void AInteractObject::TestCallDelegate(bool isSpeed)
 {
-	UE_LOG(LogTemp,Warning,TEXT("%hhd"),isGrabbed);
+	UE_LOG(LogTemp,Warning,TEXT("%hhd"),isSpeed);
 }

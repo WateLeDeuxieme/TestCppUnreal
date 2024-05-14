@@ -26,5 +26,5 @@ public:
 	virtual void TestInterfaceCall_Implementation() override;
 
 	UFUNCTION()
-	void TestCallDelegate(bool isGrabbed);
+	void TestCallDelegate(bool isSpeed);
 };
