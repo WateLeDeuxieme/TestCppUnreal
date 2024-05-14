@@ -15,6 +15,7 @@ class UPhysicsHandleComponent;
 struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGrabbedObject, bool, isGrabbed);
 
 UCLASS(config=Game)
 class ATestCppUnrealCharacter : public ACharacter
@@ -23,6 +24,7 @@ class ATestCppUnrealCharacter : public ACharacter
 
 	UPROPERTY(VisibleAnywhere)
 	UPhysicsHandleComponent* PhysicsHandlerComp;
+	
 	
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
@@ -56,6 +58,8 @@ class ATestCppUnrealCharacter : public ACharacter
 public:
 	ATestCppUnrealCharacter();
 	
+	UPROPERTY(BlueprintAssignable,Blueprintable)
+	FOnGrabbedObject OnGrabbedObjectDelegate;
 
 protected:
 

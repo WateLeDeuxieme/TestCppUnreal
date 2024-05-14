@@ -3,6 +3,9 @@
 
 #include "InteractObject.h"
 
+#include "Kismet/GameplayStatics.h"
+#include "TestCppUnreal/TestCppUnrealCharacter.h"
+
 // Sets default values
 AInteractObject::AInteractObject()
 {
@@ -18,7 +21,11 @@ AInteractObject::AInteractObject()
 void AInteractObject::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	if(ATestCppUnrealCharacter* PlayerRef = Cast<ATestCppUnrealCharacter>(UGameplayStatics::GetPlayerCharacter(this,0)))
+	{
+		UE_LOG(LogTemp,Warning,TEXT("TESTREFPLAYER"));
+		PlayerRef->OnGrabbedObjectDelegate.AddDynamic(this,&AInteractObject::TestCallDelegate);
+	}
 }
 
 // Called every frame
@@ -38,4 +45,9 @@ bool AInteractObject::ReactToTrigger_Implementation()
 void AInteractObject::TestInterfaceCall_Implementation()
 {
 	UE_LOG(LogTemp,Warning,TEXT("TESTINTERFACECALL"));
+}
+
+void AInteractObject::TestCallDelegate(bool isGrabbed)
+{
+	UE_LOG(LogTemp,Warning,TEXT("%hhd"),isGrabbed);
 }

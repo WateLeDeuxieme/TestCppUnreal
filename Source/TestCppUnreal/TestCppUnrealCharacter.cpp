@@ -69,6 +69,7 @@ void ATestCppUnrealCharacter::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
+	
 
 
 	
@@ -173,6 +174,7 @@ void ATestCppUnrealCharacter::Grab(const FInputActionValue& Value)
 	if (Hit.bBlockingHit)
 	{
 		
+		OnGrabbedObjectDelegate.Broadcast(true);
 		PhysicsHandlerComp->GrabComponentAtLocation(Hit.GetActor()->FindComponentByClass<UStaticMeshComponent>(),"None",Hit.Location);
 		
 	}
@@ -180,5 +182,7 @@ void ATestCppUnrealCharacter::Grab(const FInputActionValue& Value)
 
 void ATestCppUnrealCharacter::Release(const FInputActionValue& Value)
 {
+	
+	OnGrabbedObjectDelegate.Broadcast(false);
 	PhysicsHandlerComp->ReleaseComponent();
 }
